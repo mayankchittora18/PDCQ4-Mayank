@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome {{ name }}</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="{{ picture }}" alt="Profile Picture" class="profile-img">
+
+        <h2>Hello! {{ name }}</h2>
+
+        <p>Signed in as <b>{{ email }}</b></p>
+
+        <p class="time">
+            Current Indian Time:<br>
+            <b>{{ current_ist }}</b>
+        </p>
+
+        <a href="/logout" class="signout-btn">Sign Out</a>
+    </div>
+</body>
+</html>
