@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="margin-top: 0px;">
         <img src="{{ picture }}" alt="Profile Picture" class="profile-img">
 
         <h2>Hello! {{ name }}</h2>
@@ -21,5 +21,29 @@
 
         <a href="/logout" class="signout-btn">Sign Out</a>
     </div>
+
+    <!-- Phase 2 UI -->
+    <div class="container" style="margin-top: -50px;">
+        <h3>Phase 2: Printing Design</h3>
+
+        <form action="/design" method="POST">
+            <label><b>Number of Lines (max 100):</b></label><br>
+            <input type="number" name="lines" min="1" max="100" required>
+            <button type="submit">Display</button>
+        </form>
+
+        {% if error %}
+            <p style="color:red; font-weight:bold;">{{ error }}</p>
+        {% endif %}
+
+        {% if output %}
+        <pre style="margin-top:20px; font-size:16px; line-height:18px;">
+        {% for line in output %}
+        {{ line }}
+        {% endfor %}
+        </pre>
+        {% endif %}
+    </div>
+
 </body>
 </html>

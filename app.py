@@ -8,6 +8,7 @@ import datetime
 import pytz
 import requests
 import os
+from pattern_generator import generate_design
 
 app = Flask(__name__)
 app.secret_key = "secret-key"
@@ -84,6 +85,42 @@ def oauth2callback():
 def logout():
     session.clear()
     return redirect("/")
+
+# Phase 2
+@app.route("/design", methods=["POST"])
+def design():
+    if "google_id" not in session:
+        return redirect("/")
+
+    num = int(request.form.get("lines", 0))
+
+    if num < 1 or num > 100:
+        ist_time = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
+        current_ist = ist_time.strftime("%Y-%m-%d %H:%M:%S")
+
+        return render_template(
+            "home.html",
+            name=session['name'],
+            email=session['email'],
+            picture=session['picture'],
+            current_ist=current_ist,
+            error="Please enter a number between 1 and 100."
+        )
+
+    output = generate_design(num)
+
+    ist_time = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
+    current_ist = ist_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    return render_template(
+        "home.html",
+        name=session['name'],
+        email=session['email'],
+        picture=session['picture'],
+        current_ist=current_ist,
+        output=output
+    )
+
 
 # Run main app
 if __name__ == "__main__":
